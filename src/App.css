@@ -1,38 +1,117 @@
 .App {
-  text-align: center;
+    min-height: 100%;
+    overflow: hidden;
+    color: #E6EBE0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Speaker-logo-main {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+.Speaker-logo-queued {
+    height: 2em;
+    pointer-events: none;
+}
+
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .Speaker-logo-main {
+        animation: App-logo-spin infinite 7s linear;
+    }
+
+    .Speaker-logo-queued {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ED6A5A;
+    border-radius: 50%;
+    margin: 0.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 2em;
+    font-weight: bolder;
 }
 
-.App-link {
-  color: #61dafb;
+.Queue-body {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #5D576B;
+    min-height: 100vh;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Queue-main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #9BC1BC;
 }
+
+.Queue-queued, .Queue-queued > div {
+    display: flex;
+    width: 70%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.UpNext {
+    width: 100%;
+    text-align: left;
+}
+
+.Speaker-queued {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5em;
+    border-bottom: 1px solid #E6EBE0;
+}
+
+.Speaker-queued:last-child {
+    border-bottom: none;
+}
+
+.Actions {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0.3rem;
+    right: 0.3rem;
+}
+
+.speaker-appear {
+    opacity: 0;
+}
+
+.speaker-appear-active {
+    opacity: 1;
+    transition: opacity 300ms linear;
+}
+
+.speaker-exit {
+    opacity: 1;
+}
+
+.speaker-exit-active {
+    opacity: 0;
+    transition: opacity 300ms linear;
+}
+
