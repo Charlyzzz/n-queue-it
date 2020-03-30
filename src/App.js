@@ -29,7 +29,7 @@ const Queued = ({ queued }) => {
                         unmountOnExit
                         classNames="speaker"
                         key={index}
-                        timeout={300}
+                        timeout={{ appear: 300, exit: 200 }}
                     >
                         <Speaker name={name}/>
                     </CSSTransition>)
@@ -67,17 +67,17 @@ const App = () => {
             <Queue members={queue}/>
             <div className="Actions">
                 <div className="circle" onClick={() => setQueue([...queue, { name: 'Ernesto' }])}>
-                    <span role="img" className="emoji" aria-label="hand">✋</span>
-                </div>
-                <div className="circle" onClick={() => setQueue(queue.slice(0, -1))}>
-                    <span role="img" className="emoji" aria-label="no-women">🙅‍♀</span>️
+                    <Emoji aria="hand" emoji="✋"/>
                 </div>
                 <div className="circle" onClick={() => setQueue(queue.slice(1))}>
-                    <span role="img" className="emoji" aria-label="no-women">-</span>️
+                    <Emoji aria="no-women" emoji="🙅‍♀"/>
                 </div>
             </div>
         </div>
     );
 };
+
+const Emoji = ({ aria, emoji }) =>
+    <span role="img" className="emoji" aria-label={aria}>{emoji}</span>;
 
 export default App;
