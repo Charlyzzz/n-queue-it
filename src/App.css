@@ -34,18 +34,18 @@
     }
 }
 
-.circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ED6A5A;
-    border-radius: 50%;
-    margin: 0.5rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    font-size: 2em;
-    font-weight: bolder;
-}
+/*.circle {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    background: #ED6A5A;*/
+/*    border-radius: 50%;*/
+/*    margin: 0.5rem;*/
+/*    width: 3.5rem;*/
+/*    height: 3.5rem;*/
+/*    font-size: 2em;*/
+/*    font-weight: bolder;*/
+/*}*/
 
 .Queue-body {
     display: flex;
