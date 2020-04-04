@@ -28,12 +28,16 @@ body {
 
 .side-a {
     display: grid;
-    height: 85vh;
+    height: 75vh;
     grid-row-gap: 0.5rem;
     grid-column-gap: 0.5rem;
-    grid-template-columns: 3fr 0.5fr 5fr 5fr 5fr 0.5fr 5fr 0.5fr 3fr;
-    grid-template-rows: 1fr 0.5fr 9fr 0.5fr;
-    grid-template-areas: ".          .           header      header      header      header      header      header      ." ".          .           mt          .           .           .           ut          .           ." ".          .           m           m           m           .           u           .           ." ".          qt          qt          .           .           .           .           .           .";
+    grid-template-columns: 5fr 0.5fr 5fr 5fr 5fr 0.5fr 5fr 0.5fr 5fr;
+    grid-template-rows: 4rem 2rem 1fr 2rem ;
+    grid-template-areas:
+            ".          .           header      header      header      header      header      header      ."
+            ".          .           mt          .           .           .           ut          .           ."
+            ".          .           m           m           m           .           u           .           ."
+            ".          qt          qt          .           .           .           .           .           .";
 
 }
 
@@ -44,7 +48,7 @@ body {
 
 .header-background {
     background-color: var(--primary-dark);
-    grid-area: 1 / 2 / 2 / -2;
+    grid-area: 1 / 1 / 2 / -1;
 }
 
 .header {
@@ -57,23 +61,42 @@ body {
     grid-area: mt;
 }
 
-.main-speaker-container {
-    grid-area: m;
-    background-color: darkslategrey;
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 8px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.card{
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card__media {
+    flex: 2;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    background: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2018/04/topographic_view_of_ismenia_patera/17448390-1-eng-GB/Topographic_view_of_Ismenia_Patera_article.jpg") bottom no-repeat;
+}
+.card__title {
+    flex: 1;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.main-speaker-container {
+    grid-area: m;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
 }
 
 .main-speaker {
-    background-color: plum;
+    width: 21.6rem;
+    height: 18rem;
 }
 
 .up-next-title {
@@ -82,7 +105,8 @@ body {
 
 .up-next-speaker {
     place-self: center;
-    background-color: lavender;
+    width: 9.6rem;
+    height: 8rem;
 }
 
 .up-next-container {
@@ -90,7 +114,6 @@ body {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 1fr 1fr 1fr;
-    background-color: darkslategrey;
 }
 
 .queued-title {
@@ -108,21 +131,19 @@ body {
 
 .queued-container {
     grid-area: q;
-    background-color: darkslategrey;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 0.4rem;
 }
 
-.queued-speaker{
+.queued-speaker {
     margin: 0 0.2rem 0.4rem 0.2rem;
-    width: 120px;
-    height: 100px;
-    background-color: darkgreen;
+    width: 9.6rem;
+    height: 8rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .side-a {
         height: 80vh;
         grid-row-gap: 0;
@@ -163,32 +184,3 @@ body {
     font-size: 2em;
     font-weight: bolder;
 }
-
-.pink {
-    background: hotpink;
-}
-
-
-/*.card {*/
-/*    max-height: var(--speaker-image-max-height);*/
-/*    display: flex;*/
-/*    flex: 1;*/
-/*    border-radius: var(--card-radius);*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*.speaker-name {*/
-/*    padding: 0.5rem;*/
-/*    border-radius: 0 0 var(--card-radius) var(--card-radius);*/
-/*    border-bottom: 1px solid lightgrey;*/
-/*    border-left: 1px solid lightgrey;*/
-/*    border-right: 1px solid lightgrey;*/
-/*}*/
-
-/*.speaker-logo {*/
-/*    flex: 1;*/
-/*    border-radius: var(--card-radius) var(--card-radius) 0 0;*/
-/*    background-image: url("https://www.esa.int/var/esa/storage/images/esa_multimedia/images/2018/04/topographic_view_of_ismenia_patera/17448390-1-eng-GB/Topographic_view_of_Ismenia_Patera_article.jpg");*/
-/*    background-repeat: inherit;*/
-/*}*/
-

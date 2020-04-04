@@ -11,6 +11,30 @@ const FABs = ({ onPlus, onMinus }) => {
     </div>;
 };
 
+const MainSpeaker = ({ name }) =>
+    <div className="card main-speaker">
+        <div className="card__media"/>
+        <div className="card__title">
+            {name}
+        </div>
+    </div>;
+
+const UpNextSpeaker = ({ name }) =>
+    <div className="card up-next-speaker">
+        <div className="card__media"/>
+        <div className="card__title">
+            {name}
+        </div>
+    </div>;
+
+const QueuedSpeaker = ({ name }) =>
+    <div className="card queued-speaker">
+        <div className="card__media"/>
+        <div className="card__title">
+            {name}
+        </div>
+    </div>;
+
 const App = () => {
     const participants = [
         { name: 'Erwin' },
@@ -40,9 +64,7 @@ const App = () => {
                 <div className="main-speaker-container">
                     {
                         queue.slice(0, 1).map(({ name }) =>
-                            <div key={0} className="card main-speaker">
-                                {name}
-                            </div>
+                            <MainSpeaker key={0} name={name}/>
                         )
                     }
                 </div>
@@ -54,9 +76,7 @@ const App = () => {
                 <div className="up-next-container">
                     {
                         queue.slice(1, 4).map(({ name }, index) =>
-                            <div key={index} className="card up-next-speaker">
-                                {name}
-                            </div>
+                            <UpNextSpeaker key={index} name={name}/>
                         )
                     }
                 </div>
@@ -69,9 +89,7 @@ const App = () => {
                 <div className="queued-container">
                     {
                         queue.slice(4).map(({ name }, index) =>
-                            <div key={index} className="card queued-speaker">
-                                {name}
-                            </div>
+                            <QueuedSpeaker key={index} name={name}/>
                         )
                     }
                 </div>
