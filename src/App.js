@@ -11,46 +11,90 @@ const FABs = ({ onPlus, onMinus }) => {
     </div>;
 };
 
-const MainSpeaker = ({ name }) =>
-    <div className="card main-speaker">
+const Emoji = ({ aria, emoji }) =>
+    <span role="img" className="emoji" aria-label={aria}>{emoji}</span>;
+
+
+const Speaker = ({ name }) =>
+    <div className="card">
         <div className="card__media"/>
         <div className="card__title">
-            {name}
+            <span>{name}</span>
         </div>
     </div>;
 
-const UpNextSpeaker = ({ name }) =>
-    <div className="card up-next-speaker">
-        <div className="card__media"/>
-        <div className="card__title">
-            {name}
-        </div>
-    </div>;
+const randomName = Math.random().toString(36).substr(2);
 
-const QueuedSpeaker = ({ name }) =>
-    <div className="card queued-speaker">
-        <div className="card__media"/>
-        <div className="card__title">
-            {name}
+const Rest = ({ queue }) => {
+    const [ref, setCardRef] = useState(null);
+    return (
+        <div className="card" ref={setCardRef}>
+            <div className="card__media blured"/>
+            <div className="card__title blured">
+                <span> {randomName} </span>
+            </div>
+            {
+                ref ?
+                    <Overlay cardRef={ref} queue={queue}/>
+                    : null
+            }
         </div>
-    </div>;
+    );
+};
+
+const Overlay = ({ cardRef, queue }) => {
+    const { height } = cardRef.getBoundingClientRect();
+    const margin = parseInt(window.getComputedStyle(cardRef)['margin'].replace('px', ''));
+    console.log(margin);
+    const corrected = (axis) => ((axis - margin) / 2);
+    const centeredHorizontallyAndVertically = {
+        marginTop: corrected(height),
+        marginLeft: 'auto'
+
+    };
+    return (
+        <div className="card__overlay" style={centeredHorizontallyAndVertically}>
+            +{queue.length}
+        </div>
+    );
+};
+const QueuedSpeaker = ({ name, queue, index }) => {
+    const moreThan6Speakers = queue.length > 0;
+    return (
+        <>
+            {
+                moreThan6Speakers && index === 5 ?
+                    <Rest queue={queue}/> :
+                    <Speaker name={name}/>
+            }
+        </>
+    );
+};
 
 const App = () => {
     const participants = [
+        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
         { name: 'Erwin' },
         { name: 'Nico' },
+        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
         { name: 'Ernesto' },
         { name: 'Agustin' },
         { name: 'Fernando' },
+        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
         { name: 'Fabian' },
         { name: 'Virginia' },
         { name: 'Marcelo' },
         { name: 'Horacio' },
         { name: 'Alberto' },
+        { name: 'Hernan Rogelio Arias ApellidoLargo' },
         { name: 'Marianela' },
-        { name: 'Hernan Rogelio Arias ApellidoLargo' }
+        { name: 'Wilson' }
     ];
     const [queue, setQueue] = useState(participants);
+    const mainSpeaker = queue.slice(0, 1);
+    const upNextSpeakers = queue.slice(1, 4);
+    let firstSixQueuedSpeakers = queue.slice(4, 10);
+    let restOfQueuedSpeakers = queue.slice(10);
     return (
         <div className="app">
             <div className="side-a">
@@ -63,8 +107,8 @@ const App = () => {
                 </div>
                 <div className="main-speaker-container">
                     {
-                        queue.slice(0, 1).map(({ name }) =>
-                            <MainSpeaker key={0} name={name}/>
+                        mainSpeaker.map(({ name }) =>
+                            <Speaker key={0} name={name}/>
                         )
                     }
                 </div>
@@ -75,8 +119,8 @@ const App = () => {
 
                 <div className="up-next-container">
                     {
-                        queue.slice(1, 4).map(({ name }, index) =>
-                            <UpNextSpeaker key={index} name={name}/>
+                        upNextSpeakers.map(({ name }, index) =>
+                            <Speaker key={index} name={name}/>
                         )
                     }
                 </div>
@@ -84,12 +128,15 @@ const App = () => {
                 <div className="queued-title headline-centered">
                     Queued
                 </div>
-            </div>
-            <div className="side-b">
                 <div className="queued-container">
                     {
-                        queue.slice(4).map(({ name }, index) =>
-                            <QueuedSpeaker key={index} name={name}/>
+                        firstSixQueuedSpeakers.map(({ name }, index) =>
+                            <QueuedSpeaker
+                                key={index}
+                                name={name}
+                                index={index}
+                                queue={restOfQueuedSpeakers}
+                            />
                         )
                     }
                 </div>
@@ -102,8 +149,5 @@ const App = () => {
 
     );
 };
-
-const Emoji = ({ aria, emoji }) =>
-    <span role="img" className="emoji" aria-label={aria}>{emoji}</span>;
 
 export default App;
