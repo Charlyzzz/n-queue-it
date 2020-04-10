@@ -29,9 +29,11 @@ const Rest = ({ queue }) => {
     const [ref, setCardRef] = useState(null);
     return (
         <div className="card" ref={setCardRef}>
-            <div className="card__media blured"/>
-            <div className="card__title blured">
-                <span> {randomName} </span>
+            <div className="card blured">
+                <div className="card__media"/>
+                <div className="card__title">
+                    <span> {randomName} </span>
+                </div>
             </div>
             {
                 ref ?
@@ -45,13 +47,8 @@ const Rest = ({ queue }) => {
 const Overlay = ({ cardRef, queue }) => {
     const { height } = cardRef.getBoundingClientRect();
     const margin = parseInt(window.getComputedStyle(cardRef)['margin'].replace('px', ''));
-    console.log(margin);
     const corrected = (axis) => ((axis - margin) / 2);
-    const centeredHorizontallyAndVertically = {
-        marginTop: corrected(height),
-        marginLeft: 'auto'
-
-    };
+    const centeredHorizontallyAndVertically = { marginTop: corrected(height) };
     return (
         <div className="card__overlay" style={centeredHorizontallyAndVertically}>
             +{queue.length}
