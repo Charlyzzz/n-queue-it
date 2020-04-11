@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {getCurrentClassroomState, sendAddParticipantRequest, sendRemoveParticipantRequest} from "./api";
 
 const FABs = ({ onPlus, onMinus }) => {
     return <div className="fab">
@@ -68,30 +69,58 @@ const QueuedSpeaker = ({ name, queue, index }) => {
     );
 };
 
+const ws = new WebSocket("ws://localhost:8080/aula/iasc/eventos");
 const App = () => {
-    const participants = [
-        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
-        { name: 'Erwin' },
-        { name: 'Nico' },
-        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
-        { name: 'Ernesto' },
-        { name: 'Agustin' },
-        { name: 'Fernando' },
-        { name: 'Hernan Rogelio Arias ApellidoLargo MuyMuyLargo MuyMuyMuyLargo' },
-        { name: 'Fabian' },
-        { name: 'Virginia' },
-        { name: 'Marcelo' },
-        { name: 'Horacio' },
-        { name: 'Alberto' },
-        { name: 'Hernan Rogelio Arias ApellidoLargo' },
-        { name: 'Marianela' },
-        { name: 'Wilson' }
-    ];
-    const [queue, setQueue] = useState(participants);
+    const participantName = 'Ernesto';
+
+    const [queue, setQueue] = useState([]);
+    const [currentVersion, setCurrentVersion] = useState(0);
+
+    const updateStateWithCurrentSnapshot = () => {
+        return getCurrentClassroomState().then(currentState =>
+            Promise.all([
+                setCurrentVersion(currentState.version),
+                setQueue(currentState.aula.interesados.map(interesado => ({name: interesado.nombre}))),
+            ]));
+    };
+
+    if(queue.length === 0 && currentVersion === 0) {
+        updateStateWithCurrentSnapshot();
+    }
+
+    const addToQueue = participantName => setQueue([...queue, {name: participantName}]);
+    const removeFromQueue = participantName => {
+        setQueue(queue.filter(participant => participant.name !== participantName));
+    };
+
     const mainSpeaker = queue.slice(0, 1);
     const upNextSpeakers = queue.slice(1, 4);
-    let firstSixQueuedSpeakers = queue.slice(4, 10);
-    let restOfQueuedSpeakers = queue.slice(10);
+    const firstSixQueuedSpeakers = queue.slice(4, 10);
+    const restOfQueuedSpeakers = queue.slice(10);
+
+    ws.onmessage = (wsEvent) => {
+        const parsedWSEvent = JSON.parse(wsEvent.data);
+        const event = parsedWSEvent.evento;
+        const version = parsedWSEvent.version;
+        const isOutOfSyncWithServer = version > (currentVersion+1);
+        if (isOutOfSyncWithServer) {
+            return updateStateWithCurrentSnapshot();
+        }
+        console.log("Received message:" + JSON.stringify(event));
+        switch (event.type) {
+            case 'QuiereHablar': {
+                addToQueue(event.alumno.nombre);
+                break;
+            }
+            case 'YaNoQuiereHablar': {
+                removeFromQueue(event.alumno.nombre);
+                break;
+            }
+            default: break;
+        }
+        setCurrentVersion(version);
+    };
+
     return (
         <div className="app">
             <div className="side-a">
@@ -139,8 +168,8 @@ const App = () => {
                 </div>
             </div>
             <FABs
-                onPlus={() => setQueue([...queue, { name: 'ernesto' }])}
-                onMinus={() => setQueue(queue.slice(1))}
+                onPlus={() => sendAddParticipantRequest(participantName)}
+                onMinus={() => sendRemoveParticipantRequest(participantName)}
             />
         </div>
 
