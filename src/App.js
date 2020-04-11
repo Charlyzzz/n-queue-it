@@ -100,7 +100,7 @@ const App = () => {
                     N-Q-it!
                 </div>
                 <div className="main-speaker-title headline-centered">
-                    Main
+                    <p>Main</p>
                 </div>
                 <div className="main-speaker-container">
                     {
@@ -111,7 +111,7 @@ const App = () => {
                 </div>
 
                 <div className="up-next-title headline-centered ">
-                    Up next
+                    <p>Up next</p>
                 </div>
 
                 <div className="up-next-container">
@@ -123,7 +123,7 @@ const App = () => {
                 </div>
 
                 <div className="queued-title headline-centered">
-                    Queued
+                    <p>Queued</p>
                 </div>
                 <div className="queued-container">
                     {

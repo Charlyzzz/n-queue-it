@@ -10,6 +10,12 @@
     --gap: 1rem;
 }
 
+
+#root, html, body {
+    height: 100%;
+    width: 100%;
+}
+
 body {
     margin: 0;
     background-color: var(--background);
@@ -21,18 +27,26 @@ body {
 
 
 .app {
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .side-a {
     display: grid;
-    height: 95vh;
+    height: 95%;
     grid-row-gap: var(--gap);
     grid-column-gap: var(--gap);
-    grid-template-columns: 20% minmax(300px, 2fr) minmax(150px, 1fr) 20%;
+    grid-template-columns: minmax(2rem, 20%) minmax(300px, 2fr) minmax(150px, 1fr) minmax(2rem, 20%);
     grid-template-rows: auto auto 2fr auto 1fr;
-    grid-template-areas: ".      header      header      ." ".      mt          ut          ." ".      m           u           ." ".      qt          .           ." ".      q           q           .";
+    /*@formatter:off*/
+    grid-template-areas:
+            ".      header      header      ."
+            ".      mt          ut          ."
+            ".      m           u           ."
+            ".      qt          .           ."
+            ".      q           q           .";
+    /*@formatter:on*/
 
 }
 
@@ -57,6 +71,8 @@ body {
 
 .main-speaker-title {
     grid-area: mt;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .card {
@@ -97,11 +113,14 @@ body {
 
 .main-speaker-container {
     grid-area: m;
+    min-width: 0;
     display: flex;
 }
 
 .up-next-title {
     grid-area: ut;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .up-next-container {
@@ -113,6 +132,8 @@ body {
 
 .queued-title {
     grid-area: qt;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .queued-container {
@@ -160,21 +181,31 @@ body {
     font-weight: bolder;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     .side-a {
-        height: 80vh;
-        grid-row-gap: 0;
-        grid-column-gap: 0;
-        grid-template-columns: 1fr 0.5fr 5fr 5fr 0.5fr 1fr;
-        grid-template-rows: 0.5fr 0.5fr 3fr 0.5fr 3fr 0.5fr;
-        grid-template-areas: ".      .      header      header      header   ." ".      .      mt          .           .        ." ".      .      m           m           .        ." ".      .      ut          .           .        ." ".      .      u           u           .        ." ".      .      qt          .           .        .";
+        height: 95%;
+        grid-template-columns: minmax(0.5rem, auto) 1fr minmax(0.5rem, auto);
+        grid-template-rows: minmax(auto, 0.5fr) minmax(auto, 0.5fr) 2fr minmax(auto, 0.5fr) 1fr minmax(auto, 1fr) 0.75fr;
+        /*@formatter:off*/
+        grid-template-areas:
+                ".           header      ."
+                ".           mt          ."
+                ".           m           ."
+                ".           ut          ."
+                ".           u           ."
+                ".           qt          ."
+                ".           q          .";
+        /*@formatter:on*/
     }
 
-    .side-b {
-        grid-row-gap: 0;
-        grid-column-gap: 0;
-        grid-template-columns: 1fr 0.5fr 5fr 5fr 0.5fr 1fr;
-        grid-template-rows: auto;
-        grid-template-areas: ".      .      q           q           .        .";
+
+    .queued-container {
+        grid-area: q;
+        display: grid;
+        grid-row-gap: var(--gap);
+        grid-column-gap: var(--gap);
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 1fr);
+
     }
 }
