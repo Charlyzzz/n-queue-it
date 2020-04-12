@@ -29,7 +29,7 @@ const App = () => {
                 <div className="main-speaker-container">
                     {
                         mainSpeaker.map(({ name }) =>
-                            <Speaker name={name}/>
+                            <Speaker key={0} name={name}/>
                         )
                     }
                 </div>
