@@ -1,31 +1,10 @@
 import React, { useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group"; // ES6.
 import "./animations.css";
-import Emoji from "./Emoji";
-import Rest from "./Rest";
-import Speaker from "./Speaker";
+import QueuedSpeaker from "./components/QueuedSpeaker";
+import Speaker from "./components/Speaker";
+import FABs from "./components/Fab";
 
-const FABs = ({ onPlus, onMinus }) => {
-    return <div className="fab">
-        <div className="circle" onClick={onPlus}>
-            <Emoji aria="hand" emoji="✋"/>
-        </div>
-        <div className="circle" onClick={onMinus}>
-            <Emoji aria="no-women" emoji="🙅‍♀"/>
-        </div>
-    </div>;
-};
-
-
-const QueuedSpeaker = ({ name, queue, index }) => {
-    return (
-        <>
-            {
-                index !== 5 ? <Speaker name={name}/> : <Rest name={name} queue={queue}/>
-            }
-        </>
-    );
-};
 
 const App = () => {
     const participants = [
@@ -50,7 +29,7 @@ const App = () => {
                 <div className="main-speaker-container">
                     {
                         mainSpeaker.map(({ name }) =>
-                            <Speaker key={0} name={name}/>
+                            <Speaker name={name}/>
                         )
                     }
                 </div>
@@ -86,8 +65,7 @@ const App = () => {
                                     key={index}
                                     name={name}
                                     index={index}
-                                    queue={restOfQueuedSpeakers}
-                                />
+                                    queue={restOfQueuedSpeakers}/>
                             </CSSTransition>
                         )
                     }
