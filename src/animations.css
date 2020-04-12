@@ -1,0 +1,48 @@
+.card-animation-appear,
+.card-animation-enter {
+    opacity: 0;
+    transform: translateX(25%);
+}
+
+.card-animation-appear-active,
+.card-animation-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: opacity 350ms, transform 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+
+.card-animation-exit {
+    opacity: 1;
+}
+
+.card-animation-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.card-blur-enter {
+    filter: blur(0px);
+}
+
+.card-blur-enter-active {
+    filter: blur(3px);
+    transition: filter 300ms;
+}
+
+.card-blur-enter-done {
+    filter: blur(3px);
+}
+
+.card-blur-exit {
+    filter: blur(3px);
+}
+
+.card-blur-exit-active {
+    filter: blur(0px);
+    transition: filter 300ms;
+}
+
+.card-blur-exit-done {
+    filter: blur(0px);
+}
+

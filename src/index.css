@@ -14,6 +14,7 @@
 #root, html, body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -143,10 +144,6 @@ body {
     grid-column-gap: var(--gap);
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-}
-
-.blured {
-    filter: blur(3px);
 }
 
 .card__overlay {
